@@ -25,11 +25,12 @@ enum P_Type{
 	Sensors_Connected,
 	Sensors_Available,
 	
-	
 	Request_Data,
 	Bootloader,
+	
 	Add_Sensor,
-	Set_Settings
+	Set_Settings,
+	Delete_Sensor
 };
 
 // ADD PACKET #
