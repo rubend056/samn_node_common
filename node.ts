@@ -51,7 +51,7 @@ function getArray<T extends Deserializable>(d: MyDataView, type: (new () => T)):
 
 export class SensorData implements Deserializable {
 	name: string; // The name of the sensor
-	uid: number;
+	s_uid: number;
 	record:boolean;
 	data: {}; // We put key: value
 	// stype(1), typedata(dynamic, littleEndian)
@@ -60,7 +60,7 @@ export class SensorData implements Deserializable {
 		// var cc = d.c;
 		var ss = d.c + d.getU8();
 		var pt = d.getU8();
-		this.uid = d.getU8();
+		this.s_uid = d.getU8();
 		this.record = d.getU8() > 0;
 		this.name = sensorName(pt);
 		get_sensor_data(this.data, pt, d);
@@ -71,7 +71,7 @@ export class SensorData implements Deserializable {
 	toJSON(){
 		let o = {
 			name:this.name, 
-			uid:this.uid, 
+			s_uid:this.s_uid, 
 			data:JSON.parse(JSON.stringify(this.data))
 		};
 		// if(o.record)delete o.record;
@@ -118,22 +118,23 @@ export class SensorSlot implements Deserializable {
 	}
 }
 export class SensorSettings {
-	uid:number = 0;
 	record: boolean = true;
 	poll_time: number = 1000;
 	only_on_change: boolean = false;
 	constructor(d: MyDataView) { this.deserialize(d); }
 	deserialize(d: MyDataView) {
-		this.uid = d.getU8();
+		
 		this.record = d.getU8() > 0;
 		this.poll_time = d.getU32();
 		this.only_on_change = d.getU8() > 0;
 	}
 }
 export class SensorConnected extends SensorSlot implements Deserializable {
+	s_uid:number = 0;
 	settings: SensorSettings;
 	deserialize(d: MyDataView) { // type(1), numarray, settings(6)
 		super.deserialize(d);
+		this.s_uid = d.getU8();
 		this.settings = new SensorSettings(d);
 		this.pins = getNumberArray(d);
 	}
