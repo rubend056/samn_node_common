@@ -17,6 +17,9 @@ export function getDate(dateOffset:number=0, hours:number=0){
 	// if (!date)date=now.getDate();
 	return new Date(now.getFullYear(), now.getMonth(), now.getDate()+dateOffset, hours,0,0,0);
 }
+export function getEpochMillis(date: Date){return Math.round(date.getTime());}
+export function getEpochSeconds(date: Date){return Math.round(date.getTime()/1000);}
+export function getEpochHours(date: Date){return Math.round(date.getTime()/1000/60);}
 export function getYearMonthDay(t: Date) {
 	return util.format('%s-%s-%s', t.getUTCFullYear(), addL(t.getUTCMonth()+1, 2), addL(t.getUTCDate(), 2));
 }
