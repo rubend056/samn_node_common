@@ -4,12 +4,18 @@ import { Buffer } from 'buffer';
 
 //* FROM COMMON ***********************
 import * as util from 'util';
+import { FunctionExpr } from '@angular/compiler';
 function addL(n, size) {
 	let s = n.toString();
 	let z = size - s.length;
 	while (z--)
 		s = '0' + s;
 	return s;
+}
+export function getDate(dateOffset:number=0, hours:number=0){
+	let now = new Date();
+	// if (!date)date=now.getDate();
+	return new Date(now.getFullYear(), now.getMonth(), now.getDate()+dateOffset, hours,0,0,0);
 }
 export function getYearMonthDay(t: Date) {
 	return util.format('%s-%s-%s', t.getUTCFullYear(), addL(t.getUTCMonth()+1, 2), addL(t.getUTCDate(), 2));
